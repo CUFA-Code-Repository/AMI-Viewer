@@ -7,3 +7,4 @@ dist
 sample/
 .test-graphs.mjs
 .test-score.mjs
+.test-geo.mjs

@@ -45,5 +45,8 @@ Worker. Build is a single static bundle; `SINGLE_FILE=1` inlines everything
 3. ✅ Score — `src/score/recompute.ts` (pure engine mirroring firmware formula
    + quirks) + `ScoreView.svelte` / `PenaltyChart.svelte` + `scoreParams` store
    (what-if). Recompute matches logged within float tolerance (test:score).
-4. ⬜ 3D (Three.js) replay + MapLibre ground track, wired to the shared cursor.
+4. ✅ 3D + Map — `src/geo/project.ts` (ENU projection + altitude blend, tested),
+   `src/three/scene.ts` + `Replay3D.svelte` (Three.js, lazy-loaded), and
+   `MapTrack.svelte` (offline canvas ground-track, NO MapLibre — kept offline
+   per §1/§8 by user decision). Altitude Z = weighted baro(0.7)/GPS(0.3) blend.
 5. ⬜ Extras: A/B compare, derived signals, auto-events, data-quality, PDF, units.

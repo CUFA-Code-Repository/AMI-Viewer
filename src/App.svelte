@@ -9,6 +9,8 @@
   import TabPlaceholder from './components/TabPlaceholder.svelte';
   import SyncGraphs from './components/SyncGraphs.svelte';
   import ScoreView from './components/ScoreView.svelte';
+  import Replay3D from './components/Replay3D.svelte';
+  import MapTrack from './components/MapTrack.svelte';
 
   const ready = $derived(session.load.status === 'ready' && session.model != null);
   const hasGps = $derived(!!session.model?.gps && session.model.gps.n > 0);
@@ -28,16 +30,14 @@
           <ScoreView />
         {:else if session.activeTab === '3d'}
           {#if hasGps}
-            <TabPlaceholder title="3D Flight Replay" phase="Phase 4"
-              note="Three.js replay of the GPS + altitude path with a moving aircraft, synced to this timeline." />
+            <Replay3D />
           {:else}
             <TabPlaceholder title="3D Flight Replay" phase="No GPS"
               note="No valid GPS path in this session — 3D replay is unavailable." />
           {/if}
         {:else}
           {#if hasGps}
-            <TabPlaceholder title="Map Ground Track" phase="Phase 4"
-              note="MapLibre ground track colored by phase, linked to the shared cursor." />
+            <MapTrack />
           {:else}
             <TabPlaceholder title="Map Ground Track" phase="No GPS"
               note="No valid GPS fixes — map view is unavailable." />

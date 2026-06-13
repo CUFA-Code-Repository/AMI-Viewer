@@ -6,7 +6,7 @@ data never leaves your machine. See [design_doc.md](design_doc.md) for the full 
 
 ## Status
 
-**Phases 1–3 complete.**
+**Phases 1–4 complete.**
 - **Phase 1 (data spine)** — folder loader, Web Worker CSV parser, session model
   with master timeline + 32-bit clock-wrap stitching, overview dashboard.
 - **Phase 2 (2D graphs)** — stacked, time-synchronized uPlot panels (Power,
@@ -18,7 +18,15 @@ data never leaves your machine. See [design_doc.md](design_doc.md) for the full 
   controls (payload, announced roll, penalty threshold/coef, zero thresholds);
   penalty-integral breakdown chart; and zero forensics with zoom-to-event.
 
-3D replay + Map (Phase 4) are scaffolded as tabs, next.
+- **Phase 4 (3D + Map)** — Three.js flight replay: the aircraft follows the
+  ENU-projected GPS path (altitude = weighted baro/GPS blend, toggleable),
+  phase-colored trail, ground grid, orbit/chase/top-down cameras, and a HUD —
+  all synced to the shared cursor. Plus an offline canvas ground-track Map
+  (no tiles, no network) with the scored DISTANCE segment highlighted and
+  click-to-seek. Three.js is lazy-loaded only when the 3D tab is opened.
+
+Phase 5 (extras: A/B compare, derived signals, auto-events, data-quality report,
+PDF export, unit toggles) is next.
 
 ## Develop
 
