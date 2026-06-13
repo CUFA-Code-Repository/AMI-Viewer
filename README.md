@@ -6,10 +6,15 @@ data never leaves your machine. See [design_doc.md](design_doc.md) for the full 
 
 ## Status
 
-**Phase 1 (data spine) complete** — folder loader, Web Worker CSV parser, session
-model with master timeline + 32-bit clock-wrap stitching, and the overview
-dashboard. Graphs (Phase 2), score recompute (Phase 3), and 3D/Map (Phase 4) are
-scaffolded as tabs and arrive next.
+**Phases 1–2 complete.**
+- **Phase 1 (data spine)** — folder loader, Web Worker CSV parser, session model
+  with master timeline + 32-bit clock-wrap stitching, overview dashboard.
+- **Phase 2 (2D graphs)** — stacked, time-synchronized uPlot panels (Power,
+  Acceleration, Angular rate, Altitude baro-vs-GPS, Speed/Course, GPS quality,
+  Score) sharing one cursor and zoom range, with phase background bands, event
+  markers, threshold lines, synced hover, box-zoom, and per-panel CSV/PNG export.
+
+Score recompute (Phase 3) and 3D/Map (Phase 4) are scaffolded as tabs, next.
 
 ## Develop
 

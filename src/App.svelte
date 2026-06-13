@@ -7,6 +7,7 @@
   import Overview from './components/Overview.svelte';
   import Timeline from './components/Timeline.svelte';
   import TabPlaceholder from './components/TabPlaceholder.svelte';
+  import SyncGraphs from './components/SyncGraphs.svelte';
 
   const ready = $derived(session.load.status === 'ready' && session.model != null);
   const hasGps = $derived(!!session.model?.gps && session.model.gps.n > 0);
@@ -21,8 +22,7 @@
       <aside class="rail"><Overview /></aside>
       <main class="content">
         {#if session.activeTab === 'graphs'}
-          <TabPlaceholder title="2D Analysis Graphs" phase="Phase 2 — next"
-            note="Time-synced uPlot panels (power, accel, gyro, altitude, speed, GPS quality, score) with phase bands and event markers." />
+          <SyncGraphs />
         {:else if session.activeTab === 'score'}
           <TabPlaceholder title="Score Analysis" phase="Phase 3"
             note="Logged vs independently recomputed score, penalty-integral breakdown, zero forensics, and live what-if controls." />

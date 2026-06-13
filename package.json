@@ -7,16 +7,19 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "build:single": "vite build && vite-plugin-singlefile-inline || vite build",
+    "build:single": "cross-env SINGLE_FILE=1 vite build",
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "gen:sample": "node scripts/gen-sample-session.mjs sample/0007 && node scripts/gen-sample-session.mjs sample/0008 --truncate && node scripts/gen-sample-session.mjs sample/0009 --wrap",
-    "test": "esbuild scripts/test-parse.mjs --bundle --platform=node --format=esm --outfile=.test-bundle.mjs --log-level=warning && node .test-bundle.mjs"
+    "test": "npm run test:parse && npm run test:graphs",
+    "test:parse": "esbuild scripts/test-parse.mjs --bundle --platform=node --format=esm --outfile=.test-bundle.mjs --log-level=warning && node .test-bundle.mjs",
+    "test:graphs": "esbuild scripts/test-graphs.mjs --bundle --platform=node --format=esm --outfile=.test-graphs.mjs --log-level=warning --alias:uplot=./scripts/uplot-stub.mjs && node .test-graphs.mjs"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^4.0.0",
     "@tsconfig/svelte": "^5.0.4",
     "@types/papaparse": "^5.5.2",
+    "cross-env": "^10.1.0",
     "svelte": "^5.0.0",
     "svelte-check": "^4.0.0",
     "tslib": "^2.7.0",
@@ -25,6 +28,7 @@
     "vite-plugin-singlefile": "^2.0.3"
   },
   "dependencies": {
-    "papaparse": "^5.4.1"
+    "papaparse": "^5.4.1",
+    "uplot": "^1.6.32"
   }
 }

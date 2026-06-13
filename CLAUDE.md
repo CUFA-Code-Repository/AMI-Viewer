@@ -38,7 +38,10 @@ Worker. Build is a single static bundle; `SINGLE_FILE=1` inlines everything
 
 ## Build phases (design_doc §10)
 1. ✅ Data spine + overview dashboard.
-2. ⬜ 2D synced uPlot graphs (phase bands, events, export).
+2. ✅ 2D synced uPlot graphs — `src/graphs/` (panels, decimation, plugins,
+   uPlot data build, export) + `Panel.svelte` / `SyncGraphs.svelte`. Shared
+   X-range via `session.visibleRange`, cursor via `session.cursorTimeMs`.
+   Tests: `npm run test:graphs` (uPlot stubbed via esbuild --alias).
 3. ⬜ Score: logged display + independent recompute + what-if + zero forensics.
 4. ⬜ 3D (Three.js) replay + MapLibre ground track, wired to the shared cursor.
 5. ⬜ Extras: A/B compare, derived signals, auto-events, data-quality, PDF, units.

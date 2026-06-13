@@ -5,3 +5,4 @@ dist
 .vite
 .test-bundle.mjs
 sample/
+.test-graphs.mjs
