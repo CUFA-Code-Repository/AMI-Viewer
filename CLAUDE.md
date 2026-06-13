@@ -42,6 +42,8 @@ Worker. Build is a single static bundle; `SINGLE_FILE=1` inlines everything
    uPlot data build, export) + `Panel.svelte` / `SyncGraphs.svelte`. Shared
    X-range via `session.visibleRange`, cursor via `session.cursorTimeMs`.
    Tests: `npm run test:graphs` (uPlot stubbed via esbuild --alias).
-3. ⬜ Score: logged display + independent recompute + what-if + zero forensics.
+3. ✅ Score — `src/score/recompute.ts` (pure engine mirroring firmware formula
+   + quirks) + `ScoreView.svelte` / `PenaltyChart.svelte` + `scoreParams` store
+   (what-if). Recompute matches logged within float tolerance (test:score).
 4. ⬜ 3D (Three.js) replay + MapLibre ground track, wired to the shared cursor.
 5. ⬜ Extras: A/B compare, derived signals, auto-events, data-quality, PDF, units.

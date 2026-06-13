@@ -6,15 +6,19 @@ data never leaves your machine. See [design_doc.md](design_doc.md) for the full 
 
 ## Status
 
-**Phases 1–2 complete.**
+**Phases 1–3 complete.**
 - **Phase 1 (data spine)** — folder loader, Web Worker CSV parser, session model
   with master timeline + 32-bit clock-wrap stitching, overview dashboard.
 - **Phase 2 (2D graphs)** — stacked, time-synchronized uPlot panels (Power,
   Acceleration, Angular rate, Altitude baro-vs-GPS, Speed/Course, GPS quality,
   Score) sharing one cursor and zoom range, with phase background bands, event
   markers, threshold lines, synced hover, box-zoom, and per-panel CSV/PNG export.
+- **Phase 3 (score)** — logged score vs an independent recompute (mirrors the
+  firmware formula and quirks) shown side-by-side with the delta; live what-if
+  controls (payload, announced roll, penalty threshold/coef, zero thresholds);
+  penalty-integral breakdown chart; and zero forensics with zoom-to-event.
 
-Score recompute (Phase 3) and 3D/Map (Phase 4) are scaffolded as tabs, next.
+3D replay + Map (Phase 4) are scaffolded as tabs, next.
 
 ## Develop
 

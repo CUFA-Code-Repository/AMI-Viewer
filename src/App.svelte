@@ -8,6 +8,7 @@
   import Timeline from './components/Timeline.svelte';
   import TabPlaceholder from './components/TabPlaceholder.svelte';
   import SyncGraphs from './components/SyncGraphs.svelte';
+  import ScoreView from './components/ScoreView.svelte';
 
   const ready = $derived(session.load.status === 'ready' && session.model != null);
   const hasGps = $derived(!!session.model?.gps && session.model.gps.n > 0);
@@ -24,8 +25,7 @@
         {#if session.activeTab === 'graphs'}
           <SyncGraphs />
         {:else if session.activeTab === 'score'}
-          <TabPlaceholder title="Score Analysis" phase="Phase 3"
-            note="Logged vs independently recomputed score, penalty-integral breakdown, zero forensics, and live what-if controls." />
+          <ScoreView />
         {:else if session.activeTab === '3d'}
           {#if hasGps}
             <TabPlaceholder title="3D Flight Replay" phase="Phase 4"
