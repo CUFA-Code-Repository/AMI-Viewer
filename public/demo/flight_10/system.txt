@@ -1,0 +1,4 @@
+boot,tick=5000,sd_init=ok
+phase_transition,tick=13000
+phase_transition,tick=25000
+phase_transition,tick=65000

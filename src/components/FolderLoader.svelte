@@ -5,9 +5,39 @@
     isFsAccessSupported, pickDirectory, readFromDataTransfer, readFromFileList,
     hasAnyKnownFile,
   } from '../loader/loadFolder';
+  import {
+    isDemoAvailable, fetchDemoManifest, loadDemoFlight, type DemoFlight,
+  } from '../loader/loadDemo';
 
   let dragging = $state(false);
   let localError = $state<string | null>(null);
+
+  // Demo logs (design_doc §2): fetched over HTTP from public/demo/. Only offered
+  // when the app is served (not the file:// single-file build, which has no server).
+  const demoOn = isDemoAvailable();
+  let demoFlights = $state<DemoFlight[] | null>(null);
+  let demoErr = $state<string | null>(null);
+  let loadingDemo = $state<string | null>(null); // id currently loading
+
+  $effect(() => {
+    if (!demoOn || demoFlights) return;
+    fetchDemoManifest()
+      .then((f) => (demoFlights = f))
+      .catch((e) => (demoErr = String((e as Error).message ?? e)));
+  });
+
+  async function handleDemo(flight: DemoFlight) {
+    localError = null;
+    loadingDemo = flight.id;
+    try {
+      const raw = await loadDemoFlight(flight);
+      await accept(raw);
+    } catch (e) {
+      localError = `Could not load ${flight.label}: ${(e as Error).message}`;
+    } finally {
+      loadingDemo = null;
+    }
+  }
 
   async function handlePick() {
     localError = null;
@@ -79,6 +109,30 @@
       <br />Missing files are fine — the app opens with whatever is present.
     </p>
 
+    {#if demoOn}
+      <div class="demo">
+        <span class="demo-lbl dim">No SD card handy? Load a demo log:</span>
+        {#if demoFlights && demoFlights.length}
+          <div class="demo-list">
+            {#each demoFlights as f (f.id)}
+              <button
+                class="demo-btn"
+                title={f.note ?? ''}
+                disabled={loadingDemo !== null}
+                onclick={() => handleDemo(f)}
+              >
+                {loadingDemo === f.id ? 'Loading…' : f.label}
+              </button>
+            {/each}
+          </div>
+        {:else if demoErr}
+          <span class="dim small">demo logs unavailable ({demoErr})</span>
+        {:else}
+          <span class="dim small">loading demo list…</span>
+        {/if}
+      </div>
+    {/if}
+
     {#if session.load.status === 'loading'}
       <div class="progress">
         <div class="bar" style:width={`${session.load.pct}%`}></div>
@@ -126,6 +180,23 @@
   }
   .file-btn:hover { border-color: var(--accent); }
   .hint { font-size: 12px; margin-top: 16px; line-height: 1.6; }
+  .demo {
+    margin-top: 20px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+  }
+  .demo-lbl { display: block; font-size: 13px; margin-bottom: 10px; }
+  .demo-list { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+  .demo-btn {
+    background: var(--bg-elev2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px 14px;
+    cursor: pointer;
+  }
+  .demo-btn:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+  .demo-btn:disabled { opacity: 0.6; cursor: default; }
+  .small { font-size: 12px; }
   .progress {
     margin-top: 20px;
     height: 22px;

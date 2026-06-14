@@ -1,0 +1,9 @@
+{
+  "flights": [
+    {
+      "id": "flight_10",
+      "label": "Flight 10",
+      "note": "Sample demo flight — full sensors, GPS path, and score."
+    }
+  ]
+}

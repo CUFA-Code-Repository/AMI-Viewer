@@ -1,0 +1,2 @@
+payload_kg=1.05
+takeoff_announced_m=40
