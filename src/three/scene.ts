@@ -144,8 +144,9 @@ export class ReplayScene {
     const pos = this.toWorld(p.e, p.n, p.up);
     this.aircraft.position.copy(pos);
 
-    // heading from GPS course (0°=North=-Z, 90°=East=+X)
-    const hd = (p.course * Math.PI) / 180;
+    // heading from GPS course (0°=North=-Z, 90°=East=+X). Course is NaN when
+    // the receiver has no valid heading (e.g. stationary) — fall back to 0.
+    const hd = Number.isFinite(p.course) ? (p.course * Math.PI) / 180 : 0;
     // pitch estimate from climb between neighbors
     let pitch = 0;
     if (i > 0) {

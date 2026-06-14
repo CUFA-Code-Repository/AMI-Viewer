@@ -43,10 +43,17 @@
   // camera mode
   $effect(() => { scene?.setMode(camMode); });
 
-  // follow the shared cursor
+  // follow the shared cursor. Guarded: a throw here must NOT escape the effect,
+  // or it propagates out of Svelte's flush (which runs inside the Timeline's
+  // requestAnimationFrame play loop) and freezes playback on every tab.
   $effect(() => {
     const t = session.cursorTimeMs;
-    if (scene && path) scene.update(pointIndexAtTime(path, t));
+    if (!scene || !path) return;
+    try {
+      scene.update(pointIndexAtTime(path, t));
+    } catch (e) {
+      loadError = String(e);
+    }
   });
 
   // resize

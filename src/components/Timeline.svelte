@@ -28,14 +28,16 @@
 
   function tick(ts: number) {
     if (!playing || !s) return;
+    // Schedule the next frame FIRST so a throw while flushing subscriber
+    // effects (e.g. the 3D scene update) can't break the playback loop.
+    rafId = requestAnimationFrame(tick);
     if (lastTs) {
       const dt = (ts - lastTs) * speed;
       let next = session.cursorTimeMs + dt;
-      if (next >= s.endMs) { next = s.endMs; playing = false; }
+      if (next >= s.endMs) { next = s.endMs; playing = false; cancelAnimationFrame(rafId); }
       session.cursorTimeMs = next;
     }
     lastTs = ts;
-    if (playing) rafId = requestAnimationFrame(tick);
   }
 
   function togglePlay() {
